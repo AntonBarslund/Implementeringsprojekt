@@ -1,12 +1,49 @@
-ulong sum = 0;
 
-foreach (var item in CreateStream(100000000, 5))
+
+ulong sum1 = 0;
+var sw1 = System.Diagnostics.Stopwatch.StartNew();
+long iter1 = 0;
+int cpIndex1 = 0;
+long[] checkpoints = new long[] { 100, 1_000, 10_000, 100_000, 1_000_000, 10_000_000, 100_000_000, 1_000_000_000 };
+
+foreach (var item in CreateStream(1000000000, 5))
 {
-    //Console.WriteLine($"X={item.Item1}, h(x)= {mult_shift(item.Item1)}");
-    sum+= mult_mod_prime(item.Item1);
-}
+    iter1++;
+    sum1 += mult_shift(item.Item1);
 
-Console.WriteLine($"SUM: {sum}");
+    if (cpIndex1 < checkpoints.Length && iter1 == checkpoints[cpIndex1])
+    {
+        // cumulative time at this checkpoint
+        Console.WriteLine($"mult_shift: iterations={iter1}, elapsed={sw1.Elapsed.TotalMilliseconds:F3} ms");
+        System.IO.File.AppendAllText("mult_shift_times.csv", $"{iter1},{sw1.Elapsed.TotalMilliseconds:F3}\n");
+        cpIndex1++;
+    }
+}
+sw1.Stop();
+Console.WriteLine($"Mult_shift sum: {sum1}  Total time: {sw1.Elapsed.TotalMilliseconds:F3} ms");
+
+// Test of mutiply mod prime
+ulong sum2 = 0;
+var sw2 = System.Diagnostics.Stopwatch.StartNew();
+long iter2 = 0;
+int cpIndex2 = 0;
+
+foreach (var item in CreateStream(1000000000, 5))
+{
+    iter2++;
+    sum2 += mult_mod_prime(item.Item1);
+
+    if (cpIndex2 < checkpoints.Length && iter2 == checkpoints[cpIndex2])
+    {
+        Console.WriteLine($"mult_mod_prime: iterations={iter2}, elapsed={sw2.Elapsed.TotalMilliseconds:F3} ms");
+        System.IO.File.AppendAllText("mult_mod_prime_times.csv", $"{iter2},{sw2.Elapsed.TotalMilliseconds:F3}\n");
+        cpIndex2++;
+    }
+}
+sw2.Stop();
+Console.WriteLine($"mult_mod_prime sum: {sum2}  Total time: {sw2.Elapsed.TotalMilliseconds:F3} ms");
+
+
 
 
 // n = number of items in stream
