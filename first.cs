@@ -1,4 +1,9 @@
-public static IEnumerable<Tuple<ulong, int>> CreateStream(int n, int l)
+foreach (var item in CreateStream(10, 5))
+{
+    Console.WriteLine($"{item.Item1}, {item.Item2}");
+}
+
+static IEnumerable<Tuple<ulong, int>> CreateStream(int n, int l)
 {
     // We generate a random uint64 number.
     Random rnd = new System.Random();
