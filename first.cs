@@ -1,8 +1,11 @@
+
 foreach (var item in CreateStream(10, 5))
 {
     Console.WriteLine($"{item.Item1}, {item.Item2}");
 }
 
+// n = number of items in stream
+// 
 static IEnumerable<Tuple<ulong, int>> CreateStream(int n, int l)
 {
     // We generate a random uint64 number.
@@ -39,3 +42,14 @@ static IEnumerable<Tuple<ulong, int>> CreateStream(int n, int l)
         yield return Tuple.Create(x & (((1UL << l) - 1UL) << 30), 1);
     }
 }
+
+
+static int mult_shift(int a, int l, int x)
+{
+    System.Diagnostics.Debug.Assert(l > 0 && l < 64, "l must be between 1 and 64");
+    System.Diagnostics.Debug.Assert(l > 0 && l < 64, "l must be between 1 and 64");
+    int h = (a*x)>>(64-l);
+    return h;
+}
+
+Console.WriteLine($"a=1, l=64, x=102 => give a multshift {mult_shift(1,64,102)}");
