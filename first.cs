@@ -34,3 +34,4 @@ public static IEnumerable<Tuple<ulong, int>> CreateStream(int n, int l)
         yield return Tuple.Create(x & (((1UL << l) - 1UL) << 30), 1);
     }
 }
+
