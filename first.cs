@@ -8,7 +8,7 @@ public static IEnumerable<Tuple<ulong, int>> CreateStream(int n, int l)
 
     for (int i = 0; i < 8; ++i)
     {
-        a = (a << 8) + (ulong)b[i];
+        a = (a << 8) + (ulong)b[i] + 1;
     }
 
     // We demand that our random number has 30 zeros on the
