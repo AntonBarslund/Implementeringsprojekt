@@ -1,8 +1,13 @@
+ulong sum = 0;
 
-foreach (var item in CreateStream(10, 5))
+foreach (var item in CreateStream(100000000, 5))
 {
-    Console.WriteLine($"{item.Item1}, {item.Item2}");
+    //Console.WriteLine($"X={item.Item1}, h(x)= {mult_shift(item.Item1)}");
+    sum+= mult_mod_prime(item.Item1);
 }
+
+Console.WriteLine($"SUM: {sum}");
+
 
 // n = number of items in stream
 // 
@@ -43,13 +48,32 @@ static IEnumerable<Tuple<ulong, int>> CreateStream(int n, int l)
     }
 }
 
-
-static int mult_shift(int a, int l, int x)
+static ulong mod(ulong x, ulong p, int q)
 {
-    System.Diagnostics.Debug.Assert(l > 0 && l < 64, "l must be between 1 and 64");
-    System.Diagnostics.Debug.Assert(l > 0 && l < 64, "l must be between 1 and 64");
-    int h = (a*x)>>(64-l);
-    return h;
+    ulong y = (x&p)+(x>>q);
+    if (y>=p) y-=p;
+    return y;
 }
 
-Console.WriteLine($"a=1, l=64, x=102 => give a multshift {mult_shift(1,64,102)}");
+static ulong mult_shift(ulong x)
+{
+    ulong a = 102682031;
+    int l = 34;
+    return (a*x)>>(64-l);
+}
+
+static ulong mult_mod_prime(ulong x)
+{
+    int q = 89;
+    ulong p = (1UL << q) - 1UL;
+    ulong a = 6435631;
+    ulong b = 11111111UL;
+    int l = 36;
+    return  mod((a*x+b) , p, q) % (1UL << l);
+}
+
+
+
+
+//Console.WriteLine($"a=1,  l=61, x=102 => give a multshift {mult_shift(102)}");
+//Console.WriteLine($"a=1, b=2, l=61, x=102 => give a multshift {mult_mod_prime(102)}");
