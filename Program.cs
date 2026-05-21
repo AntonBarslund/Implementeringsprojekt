@@ -19,7 +19,12 @@ switch (args[0])
         Opgave_1_Tests.SpeedTestMultModPrime();
         break;
     case "3":
-        Opgave_2.Run();
+        Console.WriteLine("Test of the Get function");
+        Opgave2_Tests.TestGet();
+        Console.WriteLine("Test of set fucntion");
+        Opgave2_Tests.TestSet();
+        Console.WriteLine("Test of increment function");
+        Opgave2_Tests.TestIncrement();
         break;
     default:
         Console.WriteLine("Må være en test mellem 1 - 3");

@@ -1,26 +1,83 @@
 public static class Opgave_2
 {
-    public static void Run()
+    // Entry stores a key-value pair (x_i, delta_i)
+    public class Entry
     {
-        int l = 3;
-        int m = 1 << l;
-        List<ulong>[] buckets = new List<ulong>[m];
+        public ulong Key;
+        public ulong Value;
 
-        for (int i = 0; i < buckets.Length; i++)
+        public Entry(ulong key, ulong value)
         {
-            buckets[i] = new List<ulong>();
-        }
-        ulong[] S =
-        {
-            1, 332305, 3433212, 32134
-        };
-
-        for (int i = 0; i < S.Length; i++)
-        {
-            ulong x = S[i];
-            ulong h_x = Opgave_1.MultModPrime(S[i]);
-            buckets[(int)h_x].Add(x);
-            Console.WriteLine($"x = {x}, h(x) = {h_x}");
+            Key = key;
+            Value = value;
         }
     }
+
+    public static void Init(int l)
+    {
+        int m = 1 << l; // Number of buckets: m = 2^l
+
+        // Create the bucket array
+        buckets = new List<Entry>[m];
+
+        // Create one chain/list for each bucket
+        for (int i = 0; i < buckets.Length; i++)
+        {
+            buckets[i] = new List<Entry>();
+        }
+    }
+
+    // Static field storing the array of buckets
+    static List<Entry>[] buckets = null!;
+
+    // Helper function
+    public static List<Entry> BucketFor(ulong x)
+    {
+        ulong h_x = Opgave_1.MultModPrime(x);
+        return buckets[(int)h_x];
+    }
+
+    public static ulong get(ulong x)
+    {
+        List<Entry> bucket = BucketFor(x);
+        foreach (Entry entry in bucket)
+        {
+            if (entry.Key == x)
+            {
+                return entry.Value;
+            }
+        }
+        return 0;
+    }
+
+    public static void set(ulong x, ulong v)
+    {
+        List<Entry> bucket = BucketFor(x);
+        foreach (Entry entry in bucket)
+        {
+            if (entry.Key == x)
+            {
+                entry.Value = v;
+                return;
+            }
+        }
+        bucket.Add(new Entry(x, v));
+    }
+
+    public static void increment(ulong x, ulong d)
+    {
+        List<Entry> bucket = BucketFor(x);
+        foreach (Entry entry in bucket)
+        {
+            if (entry.Key == x)
+            {
+                entry.Value += d;
+                return;
+            }
+        }
+        bucket.Add(new Entry(x, d));
+    }
 }
+
+
+
