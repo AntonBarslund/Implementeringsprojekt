@@ -10,7 +10,7 @@ public static class Opgave2_Tests
         2, 3, 4, 5
     };
 
-    private static void InitWithTestData()
+    private static void InitHashTableWithTestData()
     {
         Opgave_2.Init(3);
 
@@ -20,9 +20,20 @@ public static class Opgave2_Tests
         }
     }
 
+    private static List<Opgave_2.Entry> CreateStream()
+    {
+        return new List<Opgave_2.Entry>
+        {
+            new Opgave_2.Entry(1, 5),
+            new Opgave_2.Entry(2, 3),
+            new Opgave_2.Entry(1, 4),
+            new Opgave_2.Entry(3, 2)
+        };
+    }
+
     public static void TestGet()
     {
-        InitWithTestData();
+        InitHashTableWithTestData();
 
         Console.WriteLine(Opgave_2.get(1));       // should give 2
         Console.WriteLine(Opgave_2.get(332305));  // should give 3
@@ -33,7 +44,7 @@ public static class Opgave2_Tests
 
     public static void TestSet()
     {
-        InitWithTestData();
+        InitHashTableWithTestData();
 
         Console.WriteLine(Opgave_2.get(1)); // 2
 
@@ -44,7 +55,7 @@ public static class Opgave2_Tests
 
     public static void TestIncrement()
     {
-        InitWithTestData();
+        InitHashTableWithTestData();
 
         Console.WriteLine(Opgave_2.get(1)); // 2
 
@@ -55,5 +66,16 @@ public static class Opgave2_Tests
         Opgave_2.increment(999, 5);
 
         Console.WriteLine(Opgave_2.get(999)); // 5
+    }
+
+    public static void TestSquaresum()
+    {
+        Opgave_2.Init(3);
+
+        List<Opgave_2.Entry> stream = CreateStream();
+
+        ulong result = Opgave_2.squaresum(stream);
+
+        Console.WriteLine($"Skal give 94: {result}"); // should give 94
     }
 }

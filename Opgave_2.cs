@@ -77,7 +77,25 @@ public static class Opgave_2
         }
         bucket.Add(new Entry(x, d));
     }
+
+    public static ulong squaresum(List<Entry> stream)
+    {
+        foreach (Entry key in stream)
+        {
+            increment(key.Key, key.Value);
+        }
+        ulong sum = 0;
+        foreach (List<Entry> bucket in buckets)
+        {
+            foreach (Entry entry in bucket)
+            {
+                sum += get(entry.Key) * get(entry.Key);
+            }
+        }
+        return sum;
+    }
 }
+
 
 
 
