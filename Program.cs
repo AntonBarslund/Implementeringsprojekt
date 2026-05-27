@@ -1,4 +1,6 @@
 // Program.cs
+using System.Collections;
+
 if (args.Length == 0)
 {
     Console.WriteLine("Hvilken opgave skal testes?");
@@ -16,14 +18,16 @@ switch (args[0])
         break;
     case "2":
         Console.WriteLine("Test of the Get function");
-        Opgave2_Tests.TestGet();
+        Hashtable_with_Chaining_Test.TestGet();
         Console.WriteLine("Test of set fucntion");
-        Opgave2_Tests.TestSet();
+        Hashtable_with_Chaining_Test.TestSet();
         Console.WriteLine("Test of increment function");
-        Opgave2_Tests.TestIncrement();
+        Hashtable_with_Chaining_Test.TestIncrement();
+        Console.WriteLine("Test of squaresum");
+        Hashtable_with_Chaining_Test.TestSquaresum();
         break;
     case "3":
-        Opgave2_Tests.TestSquaresum();
+        Hashtable_with_Chaining_Test.TestSquaresumRunningTimes();
         break;
     default:
         Console.WriteLine("Må være en test mellem 1 - 4");

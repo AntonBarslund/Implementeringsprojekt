@@ -12,10 +12,12 @@ public static class Hashtable_with_Chaining
             Value = value;
         }
     }
+    static Func<ulong, int, ulong> hashFunction = Hashfunctions.MultShift;
 
-    public static void Init(int l)
+    public static void Init(int l, Func<ulong, int, ulong> chosenHashFunction)
     {
         hashBits = l;
+        hashFunction = chosenHashFunction;
         int m = 1 << l; // Number of buckets: m = 2^l
 
         // Create the bucket array
@@ -35,7 +37,7 @@ public static class Hashtable_with_Chaining
     // Helper function
     public static List<Entry> BucketFor(ulong x)
     {
-        ulong h_x = Hashfunctions.MultShift(x, hashBits);
+        ulong h_x = hashFunction(x, hashBits);
         return buckets[(int)h_x];
     }
 
@@ -103,4 +105,3 @@ public static class Hashtable_with_Chaining
         return sum;
     }
 }
-

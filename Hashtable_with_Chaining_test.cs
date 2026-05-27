@@ -1,4 +1,4 @@
-public static class Opgave2_Tests
+public static class Hashtable_with_Chaining_Test
 {
     static ulong[] S =
     {
@@ -12,7 +12,7 @@ public static class Opgave2_Tests
 
     private static void InitHashTableWithTestData()
     {
-        Hashtable_with_Chaining.Init(3);
+        Hashtable_with_Chaining.Init(3, Hashfunctions.MultShift);
 
         for (int i = 0; i < S.Length; i++)
         {
@@ -70,7 +70,7 @@ public static class Opgave2_Tests
 
     public static void TestSquaresum()
     {
-        Hashtable_with_Chaining.Init(3);
+        Hashtable_with_Chaining.Init(3, Hashfunctions.MultModPrime);
 
         List<Hashtable_with_Chaining.Entry> stream = CreateStream();
 
@@ -84,8 +84,8 @@ public static class Opgave2_Tests
         int n = 10_000_000;
         int[] lValues = { 5, 8, 10, 12, 14, 16 };
 
-        TestSquaresumWithHashFunction("Multshift", n, lValues, Hashfunctions.MultModPrime);
-        TestSquaresumWithHashFunction("Multshift", n, lValues, Hashfunctions.MultShift);
+        TestSquaresumWithHashFunction("MultModPrime", n, lValues, Hashfunctions.MultModPrime);
+        TestSquaresumWithHashFunction("MultShift", n, lValues, Hashfunctions.MultShift);
     }
 
     private static void TestSquaresumWithHashFunction(
