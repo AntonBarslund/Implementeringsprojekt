@@ -4,9 +4,9 @@ public static class Hashtable_with_Chaining
     public class Entry
     {
         public ulong Key;
-        public ulong Value;
+        public long Value;
 
-        public Entry(ulong key, ulong value)
+        public Entry(ulong key, long value)
         {
             Key = key;
             Value = value;
@@ -41,7 +41,7 @@ public static class Hashtable_with_Chaining
         return buckets[(int)h_x];
     }
 
-    public static ulong get(ulong x)
+    public static long get(ulong x)
     {
         // Return the value for the key x, or 0 if x is not in the table
         List<Entry> bucket = BucketFor(x);
@@ -55,7 +55,7 @@ public static class Hashtable_with_Chaining
         return 0;
     }
 
-    public static void set(ulong x, ulong v)
+    public static void set(ulong x, long v)
     {
         // Set the value for the key x to v. If x is not in the table, add it with value v
         List<Entry> bucket = BucketFor(x);
@@ -70,7 +70,7 @@ public static class Hashtable_with_Chaining
         bucket.Add(new Entry(x, v));
     }
 
-    public static void increment(ulong x, ulong d)
+    public static void increment(ulong x, long d)
     {
         // Increment the value for the key x by d. If x is not in the table, add it with value d
         List<Entry> bucket = BucketFor(x);
@@ -99,7 +99,8 @@ public static class Hashtable_with_Chaining
         {
             foreach (Entry entry in bucket)
             {
-                sum += get(entry.Key) * get(entry.Key); // s(x)^2
+                long value = get(entry.Key);
+                sum += (ulong)(value * value); // s(x)^2
             }
         }
         return sum;

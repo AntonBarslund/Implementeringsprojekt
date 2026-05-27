@@ -2,6 +2,9 @@ public static partial class Hashfunctions
 {
     // n = number of items in stream
     // l = number of bits to keep from each generated key
+    // l determine how many key values (x values) there are so if n = 6 and l = 3 could a stream be
+    // (1, 5), (2, 3), (1, 4), (3, 2), (2, 1), (1, 7)
+    // Here there is 6 total pairs = n and 3 different keys. for l = 3 there is upto 2^l = 2^3 = 8 different keys
     public static IEnumerable<Tuple<ulong, int>> CreateStream(int n, int l)
     {
         Random rnd = new System.Random();

@@ -5,7 +5,7 @@ public static class Hashtable_with_Chaining_Test
         1, 332305, 3433212, 32134
     };
 
-    static ulong[] values =
+    static long[] values =
     {
         2, 3, 4, 5
     };
@@ -81,6 +81,7 @@ public static class Hashtable_with_Chaining_Test
 
     public static void TestSquaresumRunningTimes()
     {
+        // Test of squaresums for given n and l values.
         int n = 10_000_000;
         int[] lValues = { 5, 8, 10, 12, 14, 16 };
 
@@ -94,18 +95,14 @@ public static class Hashtable_with_Chaining_Test
         int[] lValues,
         Func<ulong, int, ulong> hashFunction)
     {
+        // Run the sqauresum for the different l values
         foreach (int l in lValues)
         {
             List<Hashtable_with_Chaining.Entry> stream = CreateStreamForSquaresum(n, l);
-
             Hashtable_with_Chaining.Init(l, hashFunction);
-
             var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-
             ulong result = Hashtable_with_Chaining.squaresum(stream);
-
             stopwatch.Stop();
-
             Console.WriteLine(
                 $"{hashName}: n={n}, l={l}, different keys={1 << l}, squaresum={result}, time={stopwatch.Elapsed.TotalMilliseconds:F2} ms"
             );
@@ -113,11 +110,15 @@ public static class Hashtable_with_Chaining_Test
     }
     private static List<Hashtable_with_Chaining.Entry> CreateStreamForSquaresum(int n, int l)
     {
+        // Create an empty Entry where you have (x, delta) paris
         List<Hashtable_with_Chaining.Entry> stream = new List<Hashtable_with_Chaining.Entry>();
 
-        foreach (Tuple<ulong, int> item in Hashfunctions.CreateStream(n, l))
+
+        foreach (Tuple<ulong, int> pair in Hashfunctions.CreateStream(n, l))
         {
-            stream.Add(new Hashtable_with_Chaining.Entry(item.Item1, (ulong)item.Item2));
+            ulong key = pair.Item1;
+            int delta = pair.Item2;
+            stream.Add(new Hashtable_with_Chaining.Entry(key, delta));
         }
 
         return stream;
