@@ -1,4 +1,4 @@
-public static class Opgave_2
+public static class Hashtable_with_Chaining
 {
     // Entry stores a key-value pair (x_i, delta_i)
     public class Entry
@@ -15,6 +15,7 @@ public static class Opgave_2
 
     public static void Init(int l)
     {
+        hashBits = l;
         int m = 1 << l; // Number of buckets: m = 2^l
 
         // Create the bucket array
@@ -29,11 +30,12 @@ public static class Opgave_2
 
     // Static field storing the array of buckets
     static List<Entry>[] buckets = null!;
+    static int hashBits;
 
     // Helper function
     public static List<Entry> BucketFor(ulong x)
     {
-        ulong h_x = Opgave_1.MultModPrime(x);
+        ulong h_x = Hashfunctions.MultModPrime(x, hashBits);
         return buckets[(int)h_x];
     }
 
@@ -95,7 +97,5 @@ public static class Opgave_2
         return sum;
     }
 }
-
-
 
 

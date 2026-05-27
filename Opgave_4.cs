@@ -51,11 +51,11 @@ public static class Opgave_4 {
         C[(int)h_x] = C[h_x] + s_x * delta;
     }
 
-    public static ulong bsc_query(ulong x) {
-        ulong g_x = com_g_x(x);
-        var (h_x, s_x) = init_values(g_x);
-        return s_x * C[h_x]
-    }
+    // public static ulong bsc_query(ulong x) {
+    //ulong g_x = com_g_x(x);
+    //var (h_x, s_x) = init_values(g_x);
+    //  return s_x * C[h_x];
+    // }
 
 }
 
