@@ -17,17 +17,17 @@ switch (args[0])
         Hashing_Tests.TestRunningTimes();
         break;
     case "2":
-        Console.WriteLine("Test of the Get function");
-        Hashtable_with_Chaining_Test.TestGet();
-        Console.WriteLine("Test of set fucntion");
-        Hashtable_with_Chaining_Test.TestSet();
-        Console.WriteLine("Test of increment function");
-        Hashtable_with_Chaining_Test.TestIncrement();
+        // Console.WriteLine("Test of the Get function");
+        // Hashtable_with_Chaining_Test.TestGet();
+        // Console.WriteLine("Test of set fucntion");
+        // Hashtable_with_Chaining_Test.TestSet();
+        // Console.WriteLine("Test of increment function");
+        // Hashtable_with_Chaining_Test.TestIncrement();
         Console.WriteLine("Test of squaresum");
         Hashtable_with_Chaining_Test.TestSquaresum();
         break;
     case "3":
-        Hashtable_with_Chaining_Test.TestSquaresumRunningTimes();
+        // Hashtable_with_Chaining_Test.TestSquaresumRunningTimes();
         break;
     case "4":
         Count_Sketch_Test.TestSquaresum();
