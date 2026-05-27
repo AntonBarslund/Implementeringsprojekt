@@ -78,4 +78,48 @@ public static class Opgave2_Tests
 
         Console.WriteLine($"squaresum should give 94: {result}");
     }
+
+    public static void TestSquaresumRunningTimes()
+    {
+        int n = 10_000_000;
+        int[] lValues = { 5, 8, 10, 12, 14, 16 };
+
+        TestSquaresumWithHashFunction("Multshift", n, lValues, Hashfunctions.MultModPrime);
+        TestSquaresumWithHashFunction("Multshift", n, lValues, Hashfunctions.MultShift);
+    }
+
+    private static void TestSquaresumWithHashFunction(
+        string hashName,
+        int n,
+        int[] lValues,
+        Func<ulong, int, ulong> hashFunction)
+    {
+        foreach (int l in lValues)
+        {
+            List<Hashtable_with_Chaining.Entry> stream = CreateStreamForSquaresum(n, l);
+
+            Hashtable_with_Chaining.Init(l, hashFunction);
+
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+
+            ulong result = Hashtable_with_Chaining.squaresum(stream);
+
+            stopwatch.Stop();
+
+            Console.WriteLine(
+                $"{hashName}: n={n}, l={l}, different keys={1 << l}, squaresum={result}, time={stopwatch.Elapsed.TotalMilliseconds:F2} ms"
+            );
+        }
+    }
+    private static List<Hashtable_with_Chaining.Entry> CreateStreamForSquaresum(int n, int l)
+    {
+        List<Hashtable_with_Chaining.Entry> stream = new List<Hashtable_with_Chaining.Entry>();
+
+        foreach (Tuple<ulong, int> item in Hashfunctions.CreateStream(n, l))
+        {
+            stream.Add(new Hashtable_with_Chaining.Entry(item.Item1, (ulong)item.Item2));
+        }
+
+        return stream;
+    }
 }
