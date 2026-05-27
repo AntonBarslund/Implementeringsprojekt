@@ -16,7 +16,7 @@ public static class Hashtable_with_Chaining_Test
 
         ulong result = Hashtable_with_Chaining.squaresum(stream);
 
-        Console.WriteLine($"squaresum should give 94: {result}");
+        Console.WriteLine($"squaresum should give  qqqqqqqqq 94: {result}");
     }
 
     
