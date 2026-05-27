@@ -29,6 +29,9 @@ switch (args[0])
     case "3":
         Hashtable_with_Chaining_Test.TestSquaresumRunningTimes();
         break;
+    case "4":
+        Count_Sketch_Test.TestSquaresum();
+        break;
     default:
         Console.WriteLine("Må være en test mellem 1 - 4");
         break;

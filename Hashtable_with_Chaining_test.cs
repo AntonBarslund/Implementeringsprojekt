@@ -20,15 +20,13 @@ public static class Hashtable_with_Chaining_Test
         }
     }
 
-    private static List<Hashtable_with_Chaining.Entry> CreateStream()
+    private static IEnumerable<Tuple<ulong, int>> CreateStreamForSquaresum(int n, int l)
     {
-        return new List<Hashtable_with_Chaining.Entry>
-        {
-            new Hashtable_with_Chaining.Entry(1, 5),
-            new Hashtable_with_Chaining.Entry(2, 3),
-            new Hashtable_with_Chaining.Entry(1, 4),
-            new Hashtable_with_Chaining.Entry(3, 2)
-        };
+        // Create an empty Entry where you have (x, delta) pairs
+        yield return new Tuple<ulong, int>(1, 5);
+        yield return new Tuple<ulong, int>(2, 3);
+        yield return new Tuple<ulong, int>(1, 4);
+        yield return new Tuple<ulong, int>(3, 2);
     }
 
     public static void TestGet()
@@ -72,7 +70,7 @@ public static class Hashtable_with_Chaining_Test
     {
         Hashtable_with_Chaining.Init(3, Hashfunctions.MultModPrime);
 
-        List<Hashtable_with_Chaining.Entry> stream = CreateStream();
+        IEnumerable<Tuple<ulong, int>> stream = CreateStream();
 
         ulong result = Hashtable_with_Chaining.squaresum(stream);
 

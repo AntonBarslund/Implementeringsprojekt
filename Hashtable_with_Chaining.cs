@@ -85,13 +85,13 @@ public static class Hashtable_with_Chaining
         bucket.Add(new Entry(x, d));
     }
 
-    public static ulong squaresum(List<Entry> stream)
+    public static ulong squaresum(IEnumerable<Tuple<ulong, int>> stream)
     {
         // Increment the value for each key in the stream
         // by the corresponding delta, and return the sum of squares of all values in the table
-        foreach (Entry key in stream)
+        foreach (Tuple<ulong, int> item in stream)
         {
-            increment(key.Key, key.Value);
+            increment(item.Item1, item.Item2);
         }
         // Compute the sum of squares of all values in the table
         ulong sum = 0;
