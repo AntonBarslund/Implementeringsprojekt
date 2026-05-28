@@ -32,7 +32,11 @@ public static class Count_Sketch_Test
     public static void TestSquaresumApproximation()
     {
         int l = 8;
+<<<<<<< HEAD
         int n = 1_000_0000;
+=======
+        int n = 10_000_000;
+>>>>>>> 140db2134e053c512cf3ff62600cc4aab0d5b4b5
         // create stream
         List<Tuple<ulong, int>> stream = Hashfunctions.CreateStream(n, l).ToList();
 
@@ -59,7 +63,7 @@ public static class Count_Sketch_Test
         }
 
         // Write to CSV file
-        using (StreamWriter writer = new StreamWriter("results_0_3536.csv"))
+        using (StreamWriter writer = new StreamWriter("results_0_0625.csv"))
         {
             writer.WriteLine($"{ExactS},{exactRuntime}");
             foreach (var result in results)
@@ -68,7 +72,7 @@ public static class Count_Sketch_Test
             }
         }
 
-        Console.WriteLine($"Results written to results_0_5.csv");
+        Console.WriteLine($"Results written to results_0_0625.csv");
     }
 
 }
