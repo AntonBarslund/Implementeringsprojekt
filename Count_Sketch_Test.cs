@@ -31,36 +31,43 @@ public static class Count_Sketch_Test {
     public static void TestSquaresumApproximation()
     {
         int l = 8;
-        int n = 100_000;
-
+        int n = 1_000_000;
+        // create stream 
         List<Tuple<ulong, int>> stream = Hashfunctions.CreateStream(n, l).ToList();
-        
+
+        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         Hashtable_with_Chaining.Init(l, Hashfunctions.MultShift);
         ulong ExactS = Hashtable_with_Chaining.squaresum(stream);
+        long exactRuntime = stopwatch.ElapsedMilliseconds;
+        stopwatch.Stop();
+        Console.WriteLine($"Exact S= {ExactS},  Runtime: {stopwatch.ElapsedMilliseconds}ms");
 
-        Console.WriteLine($"Exact S= {ExactS}");
+
         
-        List<long> results = new List<long>();
+        List<Tuple<long, long>> results = new List<Tuple<long, long>>();
+
         // Run this 100 times
         for (ulong i = 0; i < 100; i++)
         {
-            long sum = Count_Sketch.est_square_sum(stream,i);
-            Console.WriteLine($"Done i={i}");
+            var stopwatchLoop = System.Diagnostics.Stopwatch.StartNew();
+            long sum = Count_Sketch.est_square_sum(stream, i);
+            stopwatchLoop.Stop();
+            Console.WriteLine($"Done i={i}, Runtime: {stopwatchLoop.ElapsedMilliseconds}ms");
 
-            results.Add(sum);
+            results.Add(new Tuple<long, long>(sum, stopwatchLoop.ElapsedMilliseconds));
         }
         
         // Write to CSV file
-        using (StreamWriter writer = new StreamWriter("results.csv"))
+        using (StreamWriter writer = new StreamWriter("results_0_5.csv"))
         {
-            writer.WriteLine(ExactS);
-            foreach (long result in results)
+            writer.WriteLine($"{ExactS},{exactRuntime}");
+            foreach (var result in results)
             {
-                writer.WriteLine(result);
+                writer.WriteLine($"{result.Item1},{result.Item2}");
             }
         }
         
-        Console.WriteLine($"Results written to results.csv");
+        Console.WriteLine($"Results written to results_0_5.csv");
     }
 
 }

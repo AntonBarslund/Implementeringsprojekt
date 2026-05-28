@@ -77,7 +77,7 @@ public static class Count_Sketch
 
     public static long est_square_sum(IEnumerable<Tuple<ulong, int>> stream,ulong rand)
     {   
-        double eps = 0.05;
+        double eps = 0.5;
         Count_Sketch.bsc_init(eps,rand);
         foreach (Tuple<ulong, int> item in stream)
         {

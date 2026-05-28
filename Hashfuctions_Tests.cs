@@ -2,8 +2,8 @@ public static class Hashing_Tests
 {
     public static void TestRunningTimes()
     {
-        int n = 10_000_000;
-        int l = 5;
+        int n = 1_000_000;
+        int l = 8;
 
         TestRunningTime("MultShift", n, l, Hashfunctions.MultShift);
         TestRunningTime("MultModPrime", n, l, Hashfunctions.MultModPrime);
