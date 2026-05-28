@@ -1,4 +1,5 @@
-public static class Count_Sketch_Test {
+public static class Count_Sketch_Test
+{
 
     private static IEnumerable<Tuple<ulong, int>> CreateStream()
     {
@@ -17,13 +18,13 @@ public static class Count_Sketch_Test {
     public static void TestSquaresum()
     {
         int l = 8;
-        
+
         Hashtable_with_Chaining.Init(l, Hashfunctions.MultShift);
         ulong ExactS = Hashtable_with_Chaining.squaresum(Count_Sketch_Test.CreateStream());
 
         Console.WriteLine($"Exact S= {ExactS}");
 
-        long sum = Count_Sketch.est_square_sum(Count_Sketch_Test.CreateStream(),0);
+        long sum = Count_Sketch.est_square_sum(Count_Sketch_Test.CreateStream(), 0);
         Console.WriteLine($"approximate S= {sum}");
 
     }
@@ -32,7 +33,7 @@ public static class Count_Sketch_Test {
     {
         int l = 8;
         int n = 1_000_000;
-        // create stream 
+        // create stream
         List<Tuple<ulong, int>> stream = Hashfunctions.CreateStream(n, l).ToList();
 
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
@@ -43,7 +44,7 @@ public static class Count_Sketch_Test {
         Console.WriteLine($"Exact S= {ExactS},  Runtime: {stopwatch.ElapsedMilliseconds}ms");
 
 
-        
+
         List<Tuple<long, long>> results = new List<Tuple<long, long>>();
 
         // Run this 100 times
@@ -56,9 +57,9 @@ public static class Count_Sketch_Test {
 
             results.Add(new Tuple<long, long>(sum, stopwatchLoop.ElapsedMilliseconds));
         }
-        
+
         // Write to CSV file
-        using (StreamWriter writer = new StreamWriter("results_0_5.csv"))
+        using (StreamWriter writer = new StreamWriter("results_0_3536.csv"))
         {
             writer.WriteLine($"{ExactS},{exactRuntime}");
             foreach (var result in results)
@@ -66,7 +67,7 @@ public static class Count_Sketch_Test {
                 writer.WriteLine($"{result.Item1},{result.Item2}");
             }
         }
-        
+
         Console.WriteLine($"Results written to results_0_5.csv");
     }
 
