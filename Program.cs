@@ -32,6 +32,9 @@ switch (args[0])
     case "4":
         Count_Sketch_Test.TestSquaresum();
         break;
+    case "5":
+        Count_Sketch_Test.TestSquaresumApproximation();
+        break;
     default:
         Console.WriteLine("Må være en test mellem 1 - 4");
         break;
