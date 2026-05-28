@@ -1,5 +1,22 @@
 public static class Hashtable_with_Chaining_Test
 {
+    public static void TestInit()
+    {
+        int l = 8;
+        IEnumerable<Tuple<ulong, int>> stream = Hashfunctions.CreateStream(1000,l);
+
+        
+        Hashtable_with_Chaining.Init(l, Hashfunctions.MultShift);
+        ulong ShiftS = Hashtable_with_Chaining.squaresum(stream);
+
+        Hashtable_with_Chaining.Init(l, Hashfunctions.MultModPrime);
+        ulong ModS = Hashtable_with_Chaining.squaresum(stream);
+
+        Console.WriteLine($"MultShift S= {ShiftS}, MultModPrime S={ModS}");
+
+        
+    }
+
     private static IEnumerable<Tuple<ulong, int>> CreateStream()
     {
         // Create an empty Entry where you have (x, delta) pairs
@@ -16,7 +33,7 @@ public static class Hashtable_with_Chaining_Test
 
         ulong result = Hashtable_with_Chaining.squaresum(stream);
 
-        Console.WriteLine($"squaresum should give  qqqqqqqqq 94: {result}");
+        Console.WriteLine($"squaresum should give 94: {result}");
     }
 
     
