@@ -23,26 +23,44 @@ public static class Count_Sketch_Test {
 
         Console.WriteLine($"Exact S= {ExactS}");
 
-        long sum = Count_Sketch.est_square_sum(Count_Sketch_Test.CreateStream());
+        long sum = Count_Sketch.est_square_sum(Count_Sketch_Test.CreateStream(),0);
         Console.WriteLine($"approximate S= {sum}");
 
     }
 
-        public static void TestSquaresumApproximation()
+    public static void TestSquaresumApproximation()
     {
         int l = 8;
-        int n = 10_000_000;
+        int n = 100_000;
+
+        List<Tuple<ulong, int>> stream = Hashfunctions.CreateStream(n, l).ToList();
         
         Hashtable_with_Chaining.Init(l, Hashfunctions.MultShift);
-        ulong ExactS = Hashtable_with_Chaining.squaresum(Hashfunctions.CreateStream(n,l));
+        ulong ExactS = Hashtable_with_Chaining.squaresum(stream);
 
         Console.WriteLine($"Exact S= {ExactS}");
-
-
+        
+        List<long> results = new List<long>();
         // Run this 100 times
-        long sum = Count_Sketch.est_square_sum(Hashfunctions.CreateStream(n,l));
-        Console.WriteLine($"approximate S= {sum}");
+        for (ulong i = 0; i < 100; i++)
+        {
+            long sum = Count_Sketch.est_square_sum(stream,i);
+            Console.WriteLine($"Done i={i}");
 
+            results.Add(sum);
+        }
+        
+        // Write to CSV file
+        using (StreamWriter writer = new StreamWriter("results.csv"))
+        {
+            writer.WriteLine(ExactS);
+            foreach (long result in results)
+            {
+                writer.WriteLine(result);
+            }
+        }
+        
+        Console.WriteLine($"Results written to results.csv");
     }
 
 }

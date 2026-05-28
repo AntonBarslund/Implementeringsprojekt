@@ -18,12 +18,12 @@ public static class Count_Sketch
     static int t;      
     static int q = 89;
     static BigInteger p = ((BigInteger)1 << 89) - 1;
+    static List<ulong> a_i = null!;
 
     public static BigInteger com_g_x(ulong x)
     {
         // Compute g(x) = a_0 + a_1x + a_2x^2 + a_3x^3 mod p
 
-        var a_i = new List<ulong> { 0x3467c1c009414b89, 0x5c81bff301f58b22, 0x7cfa97b8ff79f984, 0x4e44586dc28a8b31 };
         int n = a_i.Count; // n = 4
         BigInteger y = a_i[n - 1]; // a_i[3]
 
@@ -54,8 +54,9 @@ public static class Count_Sketch
     }
 
     // Count sketch
-    public static void bsc_init(double eps)
+    public static void bsc_init(double eps,ulong rand)
     {
+        a_i = new List<ulong> { 0x3467c1c009414b89+rand, 0x5c81bff301f58b22+rand, 0x7cfa97b8ff79f984+rand, 0x4e44586dc28a8b31+rand };
         k = (int)Math.Ceiling(8 / Math.Pow(eps, 2)); // k <- celling(8/eps^2)
         t = (int)Math.Ceiling(Math.Log2(k));
         C = new long[k]; // C[0,...,k-1] <- 0
@@ -74,10 +75,10 @@ public static class Count_Sketch
         return s_x * C[h_x];
     }
 
-    public static long est_square_sum(IEnumerable<Tuple<ulong, int>> stream)
+    public static long est_square_sum(IEnumerable<Tuple<ulong, int>> stream,ulong rand)
     {   
-        double eps = 0.5;
-        Count_Sketch.bsc_init(eps);
+        double eps = 0.05;
+        Count_Sketch.bsc_init(eps,rand);
         foreach (Tuple<ulong, int> item in stream)
         {
             Count_Sketch.bsc_process(item.Item1, item.Item2);
