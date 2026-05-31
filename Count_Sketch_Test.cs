@@ -32,11 +32,7 @@ public static class Count_Sketch_Test
     public static void TestSquaresumApproximation()
     {
         int l = 8;
-<<<<<<< HEAD
         int n = 1_000_0000;
-=======
-        int n = 10_000_000;
->>>>>>> 140db2134e053c512cf3ff62600cc4aab0d5b4b5
         // create stream
         List<Tuple<ulong, int>> stream = Hashfunctions.CreateStream(n, l).ToList();
 
